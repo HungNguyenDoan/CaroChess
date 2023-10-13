@@ -18,14 +18,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Data
-public class Users {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     @Column(name = "username")
     private String username;
     @Column(name = "password")
-    private String password;  
+    private String password; 
+    @Column(name = "name")
+    private String name; 
     @Column(name = "role")
     private String role;  
 }
