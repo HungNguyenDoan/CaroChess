@@ -24,13 +24,8 @@ public class JWTTokenProvider {
                 .compact();
     }
 
-    public Claims getJwtPayload(String token) {
-        Claims claims = Jwts.parser()
-                .setSigningKey(JWT_SECRET)
-                .parseClaimsJws(token)
-                .getBody();
-
-        return claims;
+    public String getUserNameFromJwtToken(String token) {
+        return Jwts.parser().setSigningKey(JWT_SECRET).parseClaimsJws(token).getBody().getSubject();
     }
 
     public boolean validateToken(String authToken) throws Exception {
