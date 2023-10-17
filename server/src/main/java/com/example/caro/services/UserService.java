@@ -33,16 +33,16 @@ public class UserService implements UserDetailsService {
         return new JWTUserDetail(user);
     }
 
-    public void create(String username, String password) throws Exception {
+    public void create(String username, String password,String name) throws Exception {
         User existUser = userRepository.findByUsername(username);
         if (existUser != null) {
             throw new Exception("Tài khoản đã tồn tại");
         }
         User user = User.builder()
-                            .name("test")
+                            .name(name)
                             .username(username)
                             .password(this.passwordEncoder.encode(password))
-                            .role("user")
+                            .role("USER")
                             .build();
         userRepository.save(user);
     }

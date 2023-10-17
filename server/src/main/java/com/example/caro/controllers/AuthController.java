@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.caro.JWT.JWTTokenProvider;
 import com.example.caro.JWT.JWTUserDetail;
 import com.example.caro.requests.LoginRequest;
+import com.example.caro.requests.UserRequest;
 import com.example.caro.responses.LoginResponse;
 import com.example.caro.responses.Response;
 import com.example.caro.services.UserService;
@@ -33,12 +34,12 @@ public class AuthController {
     private UserService userService;
 
     @PostMapping("register")
-    public ResponseEntity<Object> signup(@Valid @RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<Object> signup(@Valid @RequestBody UserRequest userRequest) {
         try {
-            userService.create(loginRequest.getUsername(),
-                    loginRequest.getPassword());
+            userService.create(userRequest.getUsername(),
+                    userRequest.getPassword(),userRequest.getName());
 
-            return login(loginRequest);
+            return login(new LoginRequest(userRequest.getUsername(),userRequest.getPassword()));
         } catch (Exception e) {
             return new ResponseEntity<Object>(new Response(HttpStatus.UNAUTHORIZED.value(), e.getMessage()),
                     HttpStatus.UNAUTHORIZED);

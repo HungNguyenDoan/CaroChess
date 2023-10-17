@@ -21,7 +21,9 @@ public class JWTUserDetail implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singleton(new SimpleGrantedAuthority(user.getRole()));
     }
-
+    public Long getId(){
+        return user.getId();
+    }
     @Override
     public String getPassword() {
         return user.getPassword();
