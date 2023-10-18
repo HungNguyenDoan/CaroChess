@@ -1,5 +1,6 @@
 package com.example.caro.models;
 
+import com.example.caro.constraints.Unique;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -27,6 +28,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Unique
     @Column(name = "username")
     private String username;
     @JsonIgnore
