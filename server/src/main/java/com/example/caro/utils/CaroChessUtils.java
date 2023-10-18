@@ -106,7 +106,7 @@ public class CaroChessUtils {
         return this.checkWinner(1) || this.checkWinner(2) || this.isBoardFull();
     }
 
-    public boolean checkLegalMove(int row, int col){
+    public boolean checkLegalMove(int row, int col) {
         if (row < 0 || row >= size || col < 0 || col >= size || board[row][col] != 0) {
             return false;
         }
