@@ -29,6 +29,7 @@ public class User {
     private Long id;
     @Column(name = "username")
     private String username;
+    @JsonIgnore
     @Column(name = "password")
     private String password; 
     @Column(name = "name")
@@ -36,6 +37,6 @@ public class User {
     @Column(name = "role")
     private String role;
     @JsonIgnore
-    @OneToMany
+    @OneToMany(mappedBy = "user")
     List<Game> listGame;  
 }

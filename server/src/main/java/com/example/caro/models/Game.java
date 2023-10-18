@@ -1,5 +1,8 @@
 package com.example.caro.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,10 +34,16 @@ public class Game {
     private String status;
     @Column(name = "result")
     private Integer result;
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "level_id", referencedColumnName = "id")
     private Level level;
+    @JsonProperty("level_name")
+    private String getLevelName() {
+        return level.getLevel_name();
+    }
 }
