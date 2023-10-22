@@ -1,19 +1,26 @@
 package com.example.caro.utils;
 
+import java.util.Arrays;
+
 import org.springframework.stereotype.Component;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Component
+@Slf4j
 public class CaroChessUtils {
     private int size = 20;
-    private int[][] board;
+    private int[][] board = new int[20][20];
 
     public int[][] convertStringToTable(String chessStatus) {
         for (int i = 0; i < size; ++i) {
             for (int j = 0; j < size; ++j) {
                 char c = chessStatus.charAt(i * size + j);
                 board[i][j] = Character.getNumericValue(c);
+                log.info(i + " " + j + " " + board[i][j]);
             }
         }
+        // log.info("chess now: " + Arrays.toString(board));
         return board;
     }
 
@@ -111,5 +118,8 @@ public class CaroChessUtils {
             return false;
         }
         return true;
+    }
+    public void makeMove(int row,int col) {
+        
     }
 }

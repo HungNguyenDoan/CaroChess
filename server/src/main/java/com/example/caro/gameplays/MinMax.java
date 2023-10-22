@@ -1,12 +1,17 @@
 package com.example.caro.gameplays;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.example.caro.repositories.GameRepository;
 
 import com.example.caro.utils.CaroChessUtils;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Component
+@Slf4j
 public class MinMax {
     @Autowired
     private CaroChessUtils caroChessUtils;
@@ -16,6 +21,7 @@ public class MinMax {
 
     public String process(String chessTable, int player) {
         int[][] board = caroChessUtils.convertStringToTable(chessTable);
+        log.info(chessTable);
         int[] bestMove = findBestMove(board, player);
         int row = bestMove[0];
         int col = bestMove[1];
@@ -24,16 +30,19 @@ public class MinMax {
     }
 
     private int[] findBestMove(int[][] board, int player) {
+        log.info("finding best move for player: " + player);
         int[] bestMove = new int[] { -1, -1 };
         int bestScore = Integer.MIN_VALUE;
 
         for (int i = 0; i < 20; i++) {
             for (int j = 0; j < 20; j++) {
                 if (board[i][j] == 0 && caroChessUtils.checkLegalMove(i, j)) {
+                    log.info("any case goes here" + i + " " + j);
                     board[i][j] = player;
-                    int score = minimax(board, 0, false, player);
+                    log.info("board: " + board[i][j]);
+                    int score = minimax(board, 2, false, player);
                     board[i][j] = 0;
-
+                    log.info("score calculated" + score);
                     if (score > bestScore) {
                         bestScore = score;
                         bestMove[0] = i;
@@ -42,14 +51,13 @@ public class MinMax {
                 }
             }
         }
-
+        log.info(Arrays.toString(bestMove));
         return bestMove;
     }
 
     private int minimax(int[][] board, int depth, boolean isMaximizing, int player) {
         int result = evaluate(board, player);
-
-        if (result != 0) {
+        if (depth == 0 || result != 0) {
             return result;
         }
 
@@ -57,9 +65,9 @@ public class MinMax {
             int bestScore = Integer.MIN_VALUE;
             for (int i = 0; i < 20; i++) {
                 for (int j = 0; j < 20; j++) {
-                    if (board[i][j] == 0) {
-                        board[i][j] = 1;
-                        int score = minimax(board, depth + 1, false, player);
+                    if (board[i][j] == 0 && caroChessUtils.checkLegalMove(i, j)) {
+                        board[i][j] = player;
+                        int score = minimax(board, depth - 1, false, player);
                         board[i][j] = 0;
                         bestScore = Math.max(score, bestScore);
                     }
@@ -68,11 +76,12 @@ public class MinMax {
             return bestScore;
         } else {
             int bestScore = Integer.MAX_VALUE;
+            int opponentPlayer = (player == 1) ? 2 : 1; // Chuyển đổi người chơi tối thiểu
             for (int i = 0; i < 20; i++) {
                 for (int j = 0; j < 20; j++) {
-                    if (board[i][j] == 0) {
-                        board[i][j] = 2;
-                        int score = minimax(board, depth + 1, true, player);
+                    if (board[i][j] == 0 && caroChessUtils.checkLegalMove(i, j)) {
+                        board[i][j] = opponentPlayer; // Đổi người chơi tối thiểu
+                        int score = minimax(board, depth - 1, true, player); // Chuyển đổi người chơi tối thiểu
                         board[i][j] = 0;
                         bestScore = Math.min(score, bestScore);
                     }
