@@ -1,13 +1,35 @@
 import React, { useState } from "react";
 import "./css/style.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axiosPro from "../axios/axiosConfig";
 function Login(){
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [loginMessage, setLoginMessage] = useState("");
-    
-    const handleLogin = () => {
-        
+    const navigate = useNavigate()
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        const registrationData = {
+            username: username,
+            password: password,
+        };
+        try{          
+            const data= await axiosPro.post('/auth/login',registrationData);
+            console.log(data)
+            setLoginMessage("Đăng nhập thành công")
+            const response = data.data
+            if (response) {
+                localStorage.setItem('token', response.token);
+                localStorage.setItem('name', response.data.name);
+            }
+            const token = localStorage.getItem('token');  
+            const name = localStorage.getItem('name');  
+            navigate('/home')
+        }
+        catch(error){
+            console.log(error)
+            setLoginMessage("Tài khoản hoặc mật khẩu không khớp")
+        }
     };
 
     return (

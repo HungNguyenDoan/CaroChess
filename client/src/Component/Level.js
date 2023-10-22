@@ -1,9 +1,31 @@
-import { Radio, Select } from "antd";
+import { Select } from "antd";
+import { useState } from "react";
+import axiosPro from "../axios/axiosConfig";
 
 function Level(){
-    const handleChange = (value) => {
-        console.log(`selected ${value}`);
-      };
+    const [level,setLevel]=useState()
+    const [symbol,setSymbol]=useState()
+    const handleStart = async (e) => {
+        e.preventDefault();
+        const registrationData = {
+            levelId:level,
+            first:symbol
+        };
+        console.log(registrationData)
+        try{  
+            const token = localStorage.getItem('token');  
+            const config = {
+                headers: {
+                  'Authorization': `Bearer ${token}`,
+                },
+            };        
+            const data= await axiosPro.post('/game/init',registrationData,config);
+            
+        }
+        catch(error){
+            console.log(error)         
+        }
+    };
     return(
         <section>
             <div className="form-box">
@@ -16,31 +38,48 @@ function Level(){
                         width: 120,
                         marginLeft:'100px'
                         }}
-                        onChange={handleChange}
+                        name="level"
+                        
+                        onChange={(value) => setLevel(value)} 
                         options={[
                         {
-                            value: 'de',
+                            value: '1',
                             label: 'Dễ',
                         },
                         {
-                            value: 'Trung bình',
-                            label: 'tb',
+                            value: '2',
+                            label: 'Trung bình',
                         },
                         {
-                            value: 'kho',
+                            value: '3',
                             label: 'Khó',
                         },
                         ]}
                         />
                     </div>
                     <div style={{marginBottom:'36px'}}>
-                        <label style={{color:'#fff',marginRight:'100px'}}>Ký hiệu</label>
-                        <Radio.Group name="radiogroup">
-                            <Radio value={'X'}>X</Radio>
-                            <Radio value={'O'}>O</Radio>
-                        </Radio.Group>
+                        <label style={{color:'#fff'}}>Ký hiệu</label>
+                        <Select
+                        style={{
+                        width: 120,
+                        marginLeft:'100px'
+                        }}
+                        name="symbol"
+                        
+                        onChange={(value) => setSymbol(value)} 
+                        options={[
+                        {
+                            value: '1',
+                            label: 'X',
+                        },
+                        {
+                            value: '0',
+                            label: 'O',
+                        }
+                        ]}
+                        />
                     </div>
-                    <button>Bắt đầu</button>
+                    <button onClick={handleStart}>Bắt đầu</button>
                 </form>
             </div>
         </section>
