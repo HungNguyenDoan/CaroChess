@@ -1,29 +1,27 @@
 import React, { useEffect, useState } from 'react';
-import WebSocketClient from 'websocket';
-import WebSocket from 'ws';
+
 const FE = () => {
   const [board, setBoard] = useState(Array(20).fill(Array(20).fill(null)));
   const [xIsNext, setXIsNext] = useState(true);
   const [ws, setWs] = useState(null);
+
   useEffect(() => {
-    try{
-      const newWs  = new WebSocket('ws://localhost:8080/api/play');
-    setWs(newWs );
-    
-    }
-    catch(err){
+    try {
+      const newWs = new WebSocket('ws://localhost:8080/api/play');
+      setWs(newWs);
+
+      newWs.onmessage = (event) => {
+        handleServerData(event.data);
+      };
+
+      return () => {
+        newWs.close();
+      };
+    } catch (err) {
       console.error(err);
     }
-
-    
-    // newWs.on('message', (data) => {
-    //   handleServerData(data);
-    // });
-
-    // return () => {
-    //   newWs.close();
-    // };
   }, []);
+
   const sendMove = (i, j) => {
     const data = {
       type: 'move',
@@ -32,24 +30,26 @@ const FE = () => {
 
     ws.send(JSON.stringify(data));
   };
-  const handleClick = (i,j) => {
+
+  const handleClick = (i, j) => {
     if (board[i][j] === null) {
       const newBoard = board.map((row) => [...row]);
       newBoard[i][j] = xIsNext ? 'X' : 'O';
       setBoard(newBoard);
-  
-      // Gửi thông tin nước đi
-      // sendMove(i, j);
-  
-      // Chuyển đổi lượt chơi
+
+      // Send move information to the server
+      sendMove(i, j);
+
+      // Toggle player's turn
       setXIsNext(!xIsNext);
+    }
   };
-  }
+
   const handleServerData = (data) => {
     try {
       const serverData = JSON.parse(data);
       if (serverData.type === 'move') {
-        // Xử lý nước đi của đối thủ
+        // Handle the opponent's move
         const { row, col } = serverData.coordinates;
         if (board[row][col] === null) {
           const newBoard = [...board];
@@ -58,13 +58,14 @@ const FE = () => {
           setXIsNext(!xIsNext);
         }
       } else if (serverData.type === 'gameover') {
-        // Xử lý sự kiện kết thúc trò chơi
-        // Ví dụ: hiển thị thông báo chiến thắng hoặc hòa
+        // Handle game over event
+        // For example, display a win or draw message
       }
     } catch (error) {
-      console.error('Lỗi khi xử lý dữ liệu từ máy chủ:', error);
+      console.error('Error handling data from the server:', error);
     }
   };
+
   return (
     <div className="App">
       <div className="caro-board">
@@ -84,5 +85,6 @@ const FE = () => {
       </div>
     </div>
   );
-}
-export default FE
+};
+
+export default FE;
