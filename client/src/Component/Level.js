@@ -1,10 +1,12 @@
 import { Select } from "antd";
 import { useState } from "react";
 import axiosPro from "../axios/axiosConfig";
+import { useNavigate } from "react-router-dom";
 
 function Level(){
     const [level,setLevel]=useState()
     const [symbol,setSymbol]=useState()
+    const navigate = useNavigate()
     const handleStart = async (e) => {
         e.preventDefault();
         const registrationData = {
@@ -20,7 +22,7 @@ function Level(){
                 },
             };        
             const data= await axiosPro.post('/game/init',registrationData,config);
-            
+            navigate('/play')
         }
         catch(error){
             console.log(error)         

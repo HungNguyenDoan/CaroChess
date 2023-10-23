@@ -5,7 +5,6 @@ import Login from './Component/Login';
 import Register from './Component/Register';
 import Home from './Component/Home';
 import Level from './Component/Level';
-import Game from './Component/Game';
 import FE from './Component/FE';
 
 function App() {
@@ -15,7 +14,7 @@ function App() {
       <Route path="/register" element={<Register />}></Route>  
       <Route path="/home" element={<Home />}></Route> 
       <Route path="/level" element={<Level />}></Route> 
-      <Route path="/game" element={<FE />}></Route> 
+      <Route path="/play" element={<FE />}></Route> 
   </Routes>
   );
 }

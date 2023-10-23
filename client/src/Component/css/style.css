@@ -144,3 +144,40 @@ top: -5px;
     border: 1px solid black;
     text-align: center;
 }
+.App {
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%; 
+    background-color: #E3EFE5;
+    background-image: linear-gradient(140deg, #8BA38F 5%, #b4dfbb 50%, #E3EFE5 95%);
+    background-position: center;
+    background-size: cover;
+    text-align: center;
+  }
+  
+  .caro-board {
+    margin-left: 450px;
+    grid-template-columns: repeat(20, 30px);
+    grid-template-rows: repeat(20, 30px);
+  }
+  
+  .caro-row {
+    display: grid;
+    grid-template-columns: repeat(20, 30px);
+  }
+  
+  .caro-cell {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    cursor: pointer;
+  }
+  
+  .caro-cell:hover {
+    background-color: #f0f0f0;
+  }
