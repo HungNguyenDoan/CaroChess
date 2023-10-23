@@ -72,7 +72,7 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable());
         http.cors(withDefaults());
         http.authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/auth/login", "/auth/register")
+                .requestMatchers("/auth/login", "/auth/register","/play")
                 .permitAll()
                 .anyRequest().authenticated());
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
