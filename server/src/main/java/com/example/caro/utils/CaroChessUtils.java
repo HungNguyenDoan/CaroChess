@@ -1,11 +1,10 @@
 package com.example.caro.utils;
 
-import java.util.Arrays;
-
 import org.springframework.stereotype.Component;
 
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-
+@Data
 @Component
 @Slf4j
 public class CaroChessUtils {

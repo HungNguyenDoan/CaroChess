@@ -2,6 +2,7 @@ package com.example.caro.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,5 +22,10 @@ public class GameController {
     @PostMapping("init")
     public ResponseEntity<Object> initNewGame(@Valid @RequestBody GameInitRequest data){
         return gameService.initNewGame(data.getFirst(), data.getLevelId());
+    }
+
+    @GetMapping("history")
+    public ResponseEntity<Object> getHistory() {
+        return gameService.getAllHistory();
     }
 }

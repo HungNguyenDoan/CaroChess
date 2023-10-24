@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.extern.slf4j.Slf4j;
+
 @Slf4j
 public class ServerSocketHandler extends TextWebSocketHandler {
     @Autowired
@@ -21,9 +22,9 @@ public class ServerSocketHandler extends TextWebSocketHandler {
         String request = message.getPayload();
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode jsonNode = objectMapper.readTree(request);
-        int id = jsonNode.get("id").asInt();
+        Long id = jsonNode.get("id").asLong();
         String chessTable = jsonNode.get("chess").asText();
-        String chessResponse = minMax.process(chessTable, 2);
+        String chessResponse = minMax.process(chessTable, 2, id);
         String response = String.format("%s", HtmlUtils.htmlEscape(chessResponse));
         session.sendMessage(new TextMessage(response));
     }
