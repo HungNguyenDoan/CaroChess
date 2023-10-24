@@ -22,7 +22,8 @@ function Level(){
                 },
             };        
             const data= await axiosPro.post('/game/init',registrationData,config);
-            navigate('/play')
+            console.log(data.data.game.id)
+            navigate(`/play/${data.data.game.id}/${symbol}`)
         }
         catch(error){
             console.log(error)         

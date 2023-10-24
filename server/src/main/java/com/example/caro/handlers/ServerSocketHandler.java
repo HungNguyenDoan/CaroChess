@@ -24,7 +24,7 @@ public class ServerSocketHandler extends TextWebSocketHandler {
         int id = jsonNode.get("id").asInt();
         String chessTable = jsonNode.get("chess").asText();
         String chessResponse = minMax.process(chessTable, 2);
-        String response = String.format("response from server to '%s'", HtmlUtils.htmlEscape(chessResponse));
+        String response = String.format("%s", HtmlUtils.htmlEscape(chessResponse));
         session.sendMessage(new TextMessage(response));
     }
 }

@@ -5,7 +5,7 @@ const FE = () => {
   const [board, setBoard] = useState(Array(400).fill('0'));
   const [xIsNext, setXIsNext] = useState(true);
   const [ws, setWs] = useState(null);
-  const {id}=useParams()
+  const {id,symbol}=useParams()
   
   
   useEffect(() => {
@@ -43,7 +43,7 @@ const FE = () => {
     const handleClick = () => {
       if (cellValue === '0') {
         const newBoard = [...board];
-        if(xIsNext){
+        if(symbol==='1'){
           newBoard[index] = '1'; 
         }
         else{newBoard[index] = '2';}
@@ -67,6 +67,9 @@ const FE = () => {
 
   return (
     <div className="App">
+    <div>
+      ID:{id}
+    </div>
       <div className="caro-board">
         {board.map((cell, index) => (
           <div key={index} className="cell">
@@ -77,3 +80,5 @@ const FE = () => {
     </div>
   );
 };
+
+export default FE;
