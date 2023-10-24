@@ -8,8 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @Slf4j
 public class CaroChessUtils {
-    private int size = 20;
-    private int[][] board = new int[20][20];
+    private int size = 15;
+    private int[][] board = new int[15][15];
 
     public int[][] convertStringToTable(String chessStatus) {
         for (int i = 0; i < size; ++i) {

@@ -1,13 +1,13 @@
 import { Button } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 const FE = () => {
   const [board, setBoard] = useState(Array(225).fill('0'));
   const [disabled, setDisable] = useState('auto');
   const [ws, setWs] = useState(null);
   const {id,symbol}=useParams()
-  
+  const [result,setResult]=useState('')
   
   useEffect(() => {
     try {   
@@ -27,9 +27,17 @@ const FE = () => {
   const returnMove = () => {
     ws.onmessage = (event) => {
       const returnString=event.data
-      const newBoard= returnString.split('')
-      setBoard(newBoard)
-      setDisable('auto')
+      if(returnString==='win'){
+        setResult('Win')
+      }
+      else if(returnString==='lose'){
+        setResult('Lose')
+      }
+      else{
+        const newBoard= returnString.split('')
+        setBoard(newBoard)
+        setDisable('auto')
+      }      
     };
   };
   
@@ -73,13 +81,22 @@ const FE = () => {
       <div>
         ID:{id}
       </div>
-        <div className="caro-board">
+      <div style={{
+        fontSize:'35px',
+        height:'50px',
+      }}>
+        {result}
+      </div>
+      <div className="caro-board">
           {board.map((cell, index) => (
             <div key={index} className="cell">
               {renderCell(cell, index)}
             </div>
           ))}
       </div>
+      <Link to='/home' style={{textDecoration:'none',color:'black'}}>
+        Quay lại
+      </Link>
     </div>
   );
 };

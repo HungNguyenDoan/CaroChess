@@ -10,7 +10,7 @@ function Home(){
         const token = localStorage.getItem('token');  
         const name = localStorage.getItem('name');  
         setName(name)
-        console.log("render")     
+        console.log(token)     
     }, [type]);
     const handleOut=()=>{
         localStorage.removeItem('token');
