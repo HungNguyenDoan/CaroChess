@@ -212,6 +212,7 @@ top: -5px;
 table {
     border-collapse: collapse;
     width: 500px;
+    text-align: center;
 }
 table, th, td {
     border: 1px solid #ffffff   ;

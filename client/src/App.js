@@ -7,6 +7,7 @@ import Home from './Component/Home';
 import Level from './Component/Level';
 import FE from './Component/FE';
 import History from './Component/History';
+import HistoryDetail from './Component/HistoryDetail';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <Route path="/history" element={<History />}></Route> 
       <Route path="/level" element={<Level />}></Route> 
       <Route path="/play/:id/:symbol" element={<FE />}></Route> 
+      <Route path="/historydetail/:id" element={<HistoryDetail />}></Route> 
   </Routes>
   );
 }
