@@ -61,7 +61,7 @@ function Register(){
                         <div className="error">{loginMessage}</div>
                         <button className="button2" onClick={handleLogin}>Đăng ký</button>
                         <div className="link">   
-                            <Link to='/' style={{textDecoration:'none'}}>Đăng nhập</Link>
+                            <Link to='/' style={{textDecoration:'none',color:'black'}}>Đăng nhập</Link>
                         </div>  
                     </form>
                 </div>

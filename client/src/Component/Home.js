@@ -20,7 +20,9 @@ function Home(){
     return(
         <section>
             <div className="form-box">
-                <form>
+                <form style={{
+                    width:'300px'
+                }}>
                     <h2>Cờ caro</h2>
                     <div className="name">
                         Người chơi: {name}
@@ -29,8 +31,10 @@ function Home(){
                         <Button className="button1">
                             <Link to='/level'>Chơi</Link>
                         </Button>
-                        <Button className="button1">Lịch sử thi đấu</Button>
-                        <Button className="button1">Bảng xếp hạng</Button>
+                        <Button className="button1">
+                            <Link to='/history'>Lịch sử thi đấu</Link>
+                        </Button>
+                        
                     </div>
                     <Button onClick={handleOut} className="out">Đăng xuất</Button>
                 </form>

@@ -59,7 +59,7 @@ function Login(){
                         <div className="error">{loginMessage}</div>
                         <button className="button2" onClick={handleLogin}>Đăng nhập</button>
                         <div className="link">   
-                            <Link to='/register' style={{textDecoration:'none'}}>Đăng ký</Link>
+                            <Link to='/register' style={{textDecoration:'none',color:'black'}}>Đăng ký</Link>
                         </div>                     
                     </form>
                 </div>

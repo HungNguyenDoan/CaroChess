@@ -1,9 +1,10 @@
+import { Button } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 const FE = () => {
   const [board, setBoard] = useState(Array(400).fill('0'));
-  const [xIsNext, setXIsNext] = useState(true);
+  const [disabled, setDisable] = useState('auto');
   const [ws, setWs] = useState(null);
   const {id,symbol}=useParams()
   
@@ -28,6 +29,7 @@ const FE = () => {
       const returnString=event.data
       const newBoard= returnString.split('')
       setBoard(newBoard)
+      setDisable('auto')
     };
   };
   
@@ -49,7 +51,8 @@ const FE = () => {
         else{newBoard[index] = '2';}
         const boardString=newBoard.join('');
         setBoard(newBoard);      
-        sendMove(boardString)      
+        sendMove(boardString)     
+        setDisable('none') 
       }
       returnMove()
     };
@@ -60,23 +63,23 @@ const FE = () => {
       return 'O';
     } else {
       return (
-        <div className="empty-cell" onClick={handleClick}></div>
+          <div style={{pointerEvents:disabled}} className="empty-cell"  onClick={handleClick}></div>
       );
     }
   };
 
   return (
     <div className="App">
-    <div>
-      ID:{id}
-    </div>
-      <div className="caro-board">
-        {board.map((cell, index) => (
-          <div key={index} className="cell">
-            {renderCell(cell, index)}
-          </div>
-        ))}
-    </div>
+      <div>
+        ID:{id}
+      </div>
+        <div className="caro-board">
+          {board.map((cell, index) => (
+            <div key={index} className="cell">
+              {renderCell(cell, index)}
+            </div>
+          ))}
+      </div>
     </div>
   );
 };

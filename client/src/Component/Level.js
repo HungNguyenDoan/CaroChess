@@ -1,7 +1,7 @@
-import { Select } from "antd";
+import { Button, Select } from "antd";
 import { useState } from "react";
 import axiosPro from "../axios/axiosConfig";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Level(){
     const [level,setLevel]=useState()
@@ -82,7 +82,19 @@ function Level(){
                         ]}
                         />
                     </div>
-                    <button onClick={handleStart}>Bắt đầu</button>
+                    <Button style={{
+                        width:'100px',
+                        height:'30px',
+                        borderRadius:'20px',
+                        border:'none',
+                        marginLeft:'80px',
+                        marginBottom:'20px'
+                    }} onClick={handleStart}>Bắt đầu</Button>
+                    <div>
+                        <Link to='/home' style={{textDecoration:'none',color:'black'}}>
+                            Quay lại
+                        </Link>
+                    </div>
                 </form>
             </div>
         </section>

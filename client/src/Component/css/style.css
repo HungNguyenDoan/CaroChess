@@ -20,7 +20,6 @@ section{
     display: flex;
     justify-content: center;
     align-items: center;
-
 }
 h2{
     font-size: 2em;
@@ -37,7 +36,7 @@ h2{
     font-size: 1em;
     border-radius: 30px;
     margin-top: -12px;
-    
+    margin-left: 95px;
 }
 .inputbox{
     position: relative;
@@ -154,16 +153,15 @@ top: -5px;
     background-position: center;
     background-size: cover;
     text-align: center;
-  }
+    padding-top: 20px;
+}
   
-  
-  
-  .caro-row {
+.caro-row {
     display: grid;
     grid-template-columns: repeat(20, 30px);
-  }
+}
   
-  .caro-cell {
+.caro-cell {
     width: 20px;
     height: 20px;
     border: 1px solid #000;
@@ -172,20 +170,21 @@ top: -5px;
     justify-content: center;
     font-size: 18px;
     cursor: pointer;
-  }
+}
   
-  .caro-cell:hover {
+.caro-cell:hover {
     background-color: #f0f0f0;
-  }
-  .caro-board {
+}
+.caro-board {
     display: grid;
     grid-template-columns: repeat(20, 30px);
-    
+    margin-left: 480px;
+    margin-top: 10px;
     width: 820px;
-    margin: 0 auto;
-  }
+    
+}
   
-  .cell {
+.cell {
     width: 30px;
     height: 30px;
     border: 1px solid #000;
@@ -194,19 +193,31 @@ top: -5px;
     align-items: center;
     font-size: 20px;
     cursor: pointer;
-  }
+    border-collapse: collapse;
+}
   
-  .empty-cell {
+.empty-cell {
     width: 100%;
     height: 100%;
     background-color: #fff;
     display: flex;
     justify-content: center;
     align-items: center;
-  }
+    border-collapse: collapse;
+}
   
-  .empty-cell:hover {
+.empty-cell:hover {
     background-color: #ccc;
-  }
+}
+table {
+    border-collapse: collapse;
+    width: 500px;
+}
+table, th, td {
+    border: 1px solid #ffffff   ;
+}
+th, td {
+    padding: 10px;
+}
   
   
