@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 const FE = () => {
-  const [board, setBoard] = useState(Array(400).fill('0'));
+  const [board, setBoard] = useState(Array(225).fill('0'));
   const [disabled, setDisable] = useState('auto');
   const [ws, setWs] = useState(null);
   const {id,symbol}=useParams()
