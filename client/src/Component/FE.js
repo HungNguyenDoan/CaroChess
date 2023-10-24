@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 const FE = () => {
-  const [board, setBoard] = useState(Array(20).fill(Array(20).fill(null)));
+  const [board, setBoard] = useState(Array(400).fill('0'));
   const [xIsNext, setXIsNext] = useState(true);
   const [ws, setWs] = useState(null);
-
+  const {id}=useParams()
+  
+  
   useEffect(() => {
-    try {
+    try {   
       const newWs = new WebSocket('ws://localhost:8080/api/play');
       setWs(newWs);
-
-      newWs.onmessage = (event) => {
-        handleServerData(event.data);
+      newWs.onopen = () => {
+        console.log('WebSocket connected');
       };
-
+      
       return () => {
         newWs.close();
       };
@@ -21,70 +23,57 @@ const FE = () => {
       console.error(err);
     }
   }, []);
-
-  const sendMove = (i, j) => {
-    const data = {
-      type: 'move',
-      coordinates: { row: i, col: j },
+  const returnMove = () => {
+    ws.onmessage = (event) => {
+      const returnString=event.data
+      const newBoard= returnString.split('')
+      setBoard(newBoard)
     };
-
+  };
+  
+  const sendMove = (e) => {
+    const data = {
+      id:id,
+      chess:e
+    };
     ws.send(JSON.stringify(data));
   };
 
-  const handleClick = (i, j) => {
-    if (board[i][j] === null) {
-      const newBoard = board.map((row) => [...row]);
-      newBoard[i][j] = xIsNext ? 'X' : 'O';
-      setBoard(newBoard);
-
-      // Send move information to the server
-      sendMove(i, j);
-
-      // Toggle player's turn
-      setXIsNext(!xIsNext);
-    }
-  };
-
-  const handleServerData = (data) => {
-    try {
-      const serverData = JSON.parse(data);
-      if (serverData.type === 'move') {
-        // Handle the opponent's move
-        const { row, col } = serverData.coordinates;
-        if (board[row][col] === null) {
-          const newBoard = [...board];
-          newBoard[row][col] = xIsNext ? 'O' : 'X';
-          setBoard(newBoard);
-          setXIsNext(!xIsNext);
+  const renderCell = (cellValue, index) => {
+    const handleClick = () => {
+      if (cellValue === '0') {
+        const newBoard = [...board];
+        if(xIsNext){
+          newBoard[index] = '1'; 
         }
-      } else if (serverData.type === 'gameover') {
-        // Handle game over event
-        // For example, display a win or draw message
+        else{newBoard[index] = '2';}
+        const boardString=newBoard.join('');
+        setBoard(newBoard);      
+        sendMove(boardString)      
       }
-    } catch (error) {
-      console.error('Error handling data from the server:', error);
+      returnMove()
+    };
+
+    if (cellValue === '1') {
+      return 'X';
+    } else if (cellValue === '2') {
+      return 'O';
+    } else {
+      return (
+        <div className="empty-cell" onClick={handleClick}></div>
+      );
     }
   };
 
   return (
     <div className="App">
       <div className="caro-board">
-        {board.map((row, i) => (
-          <div key={i} className="caro-row">
-            {row.map((cell, j) => (
-              <div
-                key={j}
-                className="caro-cell"
-                onClick={() => handleClick(i, j)}
-              >
-                {cell}
-              </div>
-            ))}
+        {board.map((cell, index) => (
+          <div key={index} className="cell">
+            {renderCell(cell, index)}
           </div>
         ))}
-      </div>
+    </div>
     </div>
   );
 };
-
-export default FE;
