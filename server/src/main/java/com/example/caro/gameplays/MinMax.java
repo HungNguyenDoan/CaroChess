@@ -118,11 +118,11 @@ public class MinMax {
         int consecutivePieces = 0;
         int openEnds = 0;
         int maxConsecutivePieces = 0;
-
+    
         for (int step = -4; step <= 4; step++) {
             int r = row + step * deltaRow;
             int c = col + step * deltaCol;
-
+    
             if (r >= 0 && r < 15 && c >= 0 && c < 15) {
                 if (board[r][c] == player) {
                     consecutivePieces++;
@@ -131,24 +131,38 @@ public class MinMax {
                     openEnds++;
                     consecutivePieces++;
                 } else {
+                    if (openEnds == 1) {
+                        // Nếu có 1 ô trống ở giữa
+                        if (maxConsecutivePieces == 4) {
+                            return 1000; // 4 dấu liên tiếp và 1 ô trống
+                        } else if (maxConsecutivePieces == 3) {
+                            return 100; // 3 dấu liên tiếp và 1 ô trống
+                        }
+                    } else if (openEnds == 2) {
+                        // Nếu có 2 ô trống ở 2 đầu
+                        if (maxConsecutivePieces == 4) {
+                            return 1000; // 4 dấu liên tiếp và 2 ô trống
+                        } else if (maxConsecutivePieces == 3) {
+                            return 100; // 3 dấu liên tiếp và 2 ô trống
+                        }
+                    }
                     openEnds = 0;
                     consecutivePieces = 0;
                 }
             }
         }
-
+    
         if (maxConsecutivePieces >= 5) {
             return 10000; // Nếu có 5 dấu liên tiếp, người chơi thắng
-        } else if (maxConsecutivePieces == 4 && openEnds == 2) {
-            return 1000; // Nếu có 4 dấu liên tiếp và 2 đầu trống, tình huống tốt
-        } else if (maxConsecutivePieces == 4 && openEnds == 1) {
-            return 100; // Nếu có 4 dấu liên tiếp và 1 đầu trống, tình huống tiềm năng
-        } else if (maxConsecutivePieces == 3 && openEnds == 2) {
-            return 100; // Nếu có 3 dấu liên tiếp và 2 đầu trống, tình huống tiềm năng
-        } else if (maxConsecutivePieces == 2 && openEnds == 2) {
-            return 10; // Nếu có 2 dấu liên tiếp và 2 đầu trống, tình huống cần quan tâm
+        } else if (maxConsecutivePieces == 4) {
+            return 1000; // 4 dấu liên tiếp, tình huống tốt
+        } else if (maxConsecutivePieces == 3) {
+            return 100; // 3 dấu liên tiếp, tình huống tiềm năng
+        } else if (maxConsecutivePieces == 2) {
+            return 10; // 2 dấu liên tiếp, tình huống cần quan tâm
         } else {
             return 0; // Nếu không có trường hợp đặc biệt, không đánh giá điểm
         }
     }
+    
 }
