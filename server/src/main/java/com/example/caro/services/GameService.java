@@ -27,7 +27,7 @@ public class GameService {
     @Autowired
     private UserRepository userRepository;
 
-    public ResponseEntity<Object> initNewGame(Integer first, Long level_id) {
+    public ResponseEntity<Object> initNewGame(Integer first, Long level_id, Integer hard) {
         try {
             JWTUserDetail userDetail = (JWTUserDetail) SecurityContextHolder
                     .getContext()
@@ -38,6 +38,7 @@ public class GameService {
             Game newGame = Game.builder()
                     .first(first)
                     .user(user)
+                    .hard(hard)
                     .level(level)
                     .status(initNewChessTable())
                     .build();

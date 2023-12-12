@@ -2,9 +2,6 @@ package com.example.caro.gameplays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import com.example.caro.models.Game;
-import com.example.caro.repositories.GameRepository;
 import com.example.caro.services.GameService;
 import com.example.caro.utils.CaroChessUtils;
 
@@ -19,13 +16,13 @@ public class MinMax {
     @Autowired
     private GameService gameService;
 
-    public String process(String chessTable, int player, Long id) {
+    public String process(String chessTable, int player, Long id, Integer hard) {
         int[][] board = caroChessUtils.convertStringToTable(chessTable);
         if (caroChessUtils.checkWinner(1)) {
             gameService.updateGame(chessTable, id, 1);
             return "win";
         }
-        int[] bestMove = findBestMove(board, player);
+        int[] bestMove = findBestMove(board, player, hard);
         int row = bestMove[0];
         int col = bestMove[1];
         board[row][col] = 2;
@@ -37,8 +34,7 @@ public class MinMax {
         return caroChessUtils.convertTableToString(board);
     }
 
-    private int[] findBestMove(int[][] board, int player) {
-        log.info("finding best move for player: " + player);
+    private int[] findBestMove(int[][] board, int player, int hard) {
         int[] bestMove = new int[] { -1, -1 };
         int bestScore = (player == 1) ? Integer.MIN_VALUE : Integer.MAX_VALUE; // Sử dụng MIN_VALUE hoặc MAX_VALUE tùy
                                                                                // thuộc vào người chơi
@@ -47,9 +43,7 @@ public class MinMax {
             for (int j = 0; j < 15; j++) {
                 if (board[i][j] == 0 && caroChessUtils.checkLegalMove(i, j)) {
                     board[i][j] = player;
-                    log.info("i j " + i + " " + j);
-                    int score = minimax(board, 2, false, (player == 1) ? 2 : 1); // Chuyển đổi người chơi
-                    log.info("score: " + score);
+                    int score = minimax(board, hard, false, (player == 1) ? 2 : 1); // Chuyển đổi người chơi
                     board[i][j] = 0;
                     if ((player == 1 && score > bestScore) || (player == 2 && score < bestScore)) {
                         bestScore = score;

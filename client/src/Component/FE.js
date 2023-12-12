@@ -6,8 +6,10 @@ const FE = () => {
   const [board, setBoard] = useState(Array(225).fill('0'));
   const [disabled, setDisable] = useState('auto');
   const [ws, setWs] = useState(null);
-  const {id,symbol}=useParams()
-  const [result,setResult]=useState('')
+  const {id,symbol}=useParams();
+  const {hard,hardLevel}=useParams();
+  const {level,gameLevel} = useParams();
+  const [result,setResult]=useState('');
   
   useEffect(() => {
     try {   
@@ -44,6 +46,8 @@ const FE = () => {
   const sendMove = (e) => {
     const data = {
       id:id,
+      hard:hard,
+      level: level,
       chess:e
     };
     ws.send(JSON.stringify(data));

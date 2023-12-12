@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 function Level(){
     const [level,setLevel]=useState()
     const [symbol,setSymbol]=useState()
+    const [hard,setHard]=useState()
     const [type,setType]=useState('api')
     const navigate = useNavigate()
     const [name,setName]=useState([])
@@ -13,7 +14,8 @@ function Level(){
         e.preventDefault();
         const registrationData = {
             levelId:level,
-            first:symbol
+            first:symbol,
+            hard: hard,
         };
         console.log(registrationData)
         try{  
@@ -25,7 +27,7 @@ function Level(){
             };        
             const data= await axiosPro.post('/game/init',registrationData,config);
             console.log(data.data.game.id)
-            navigate(`/play/${data.data.game.id}/${symbol}`)
+            navigate(`/play/${data.data.game.id}/${symbol}/${level}/${hard}`)
         }
         catch(error){
             console.log(error)         
@@ -68,6 +70,32 @@ function Level(){
                         ))}
                         
                         </Select>
+                    </div>
+                    <div style={{marginBottom:'36px'}}>
+                        <label style={{color:'#fff'}}>Độ khó</label>
+                        <Select
+                        style={{
+                        width: 120,
+                        marginLeft:'86px'
+                        }}
+                        name="symbol"
+                        
+                        onChange={(value) => setHard(value)} 
+                        options={[
+                        {
+                            value: 3,
+                            label: 'Dễ',
+                        },
+                        {
+                            value: 6,
+                            label: 'Trung bình',
+                        },
+                        {
+                            value: 9,
+                            label: 'Khó',
+                        },
+                        ]}
+                        />
                     </div>
                     <div style={{marginBottom:'36px'}}>
                         <label style={{color:'#fff'}}>Ký hiệu</label>

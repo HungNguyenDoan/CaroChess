@@ -17,7 +17,7 @@ function App() {
       <Route path="/home" element={<Home />}></Route> 
       <Route path="/history" element={<History />}></Route> 
       <Route path="/level" element={<Level />}></Route> 
-      <Route path="/play/:id/:symbol" element={<FE />}></Route> 
+      <Route path="/play/:id/:symbol/:level/:hard" element={<FE />}></Route> 
       <Route path="/historydetail/:id" element={<HistoryDetail />}></Route> 
   </Routes>
   );

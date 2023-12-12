@@ -11,5 +11,7 @@ public class GameInitRequest {
     @NotNull(message = "this param is required")
     Integer first;
     @NotNull(message = "this param is required")
+    Integer hard;
+    @NotNull(message = "this param is required")
     Long levelId;
 }

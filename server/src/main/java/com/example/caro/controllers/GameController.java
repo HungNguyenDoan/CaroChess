@@ -21,7 +21,7 @@ public class GameController {
 
     @PostMapping("init")
     public ResponseEntity<Object> initNewGame(@Valid @RequestBody GameInitRequest data){
-        return gameService.initNewGame(data.getFirst(), data.getLevelId());
+        return gameService.initNewGame(data.getFirst(), data.getLevelId(), data.getHard());
     }
 
     @GetMapping("history")
